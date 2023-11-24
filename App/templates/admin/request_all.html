@@ -1,0 +1,35 @@
+{% extends "layout/main.html" %}
+{% block content %}
+<h2>Все заявки</h2>
+{% for request in reque %}
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <img src="{{request.image.url}}" class="card-img" alt="{{request_list.title}}">
+        </div>
+        {% if request.image_design %}
+          <img src="{{ request.image_design.url }}" class="card-img" alt="{{ request_list.title }}">
+        {% endif %}
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Название: {{request.title}}</h5>
+            <h5 class="card-title">Категория: {{request.category}}</h5>
+            {% if request.comment %}
+              <p class="card-text">Комментарий: {{ request.comment }}</p>
+            {% endif %}
+            <p class="card-text">Дата: {{request.created_at}}</p>
+          </div>
+          {% if request.status == 'Новая' %}
+            <button type="button" class="btn btn-primary"><a href="{%  url 'App:change_status_completed' id=request.id %}" style="color: white; text-decoration: none;">Выполнено</a></button>
+            <button type="button" class="btn btn-primary"><a href="{%  url 'App:change_status_accept_work' id=request.id %}" style="color: white; text-decoration: none;">Принято в работу</a></button>
+          {% endif %}
+          {% if request.status == 'Принято в работу' or request.status == 'Выполнено' %}
+          <p class="card-text">Статус "{{ request.status }}" изменить нельзя</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>Нет заявок</p>
+  {% endfor %}
+{% endblock %}

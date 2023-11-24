@@ -1,0 +1,21 @@
+{% extends "layout/main.html" %}
+
+
+{% load bootstrap4 %}
+
+
+{% block title %} Удаление Заявки {% endblock %}
+
+
+{% block content %}
+<h2>Удаление заявки {{ app.title }}</h2>
+ {% if object.status == 'Новая' %}
+   <p>Вы уверены, что хотите удалить эту заявку?</p>
+      <form method="post">
+         {% csrf_token %}
+         {% buttons submit='Удалить' %} {% endbuttons %}
+      </form>
+      {% else %}
+             <p>Нельзя удалять заявки со статусом, отличным от "Новая"</p>
+      {% endif %}
+{% endblock %}

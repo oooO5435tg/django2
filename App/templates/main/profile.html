@@ -1,0 +1,104 @@
+{% extends "layout/main.html" %}
+{% load bootstrap4 %}
+{% block title %} Профиль пользователя {% endblock %}
+{% block content %}
+<h2>Профиль пользователя {{ user.username }}</h2>
+{% if user.first_name and user.last_name %}
+<p>Здравствуйте, {{ user.first_name }} {{ user.last_name }} </p>
+{% else %}
+<p>Здравствуйте! </p>
+{% endif %}
+<button type="button" class="btn btn-primary"><a href="{% url 'App:profile_request_add' %}" style="color: white; text-decoration: none;">Добавить заявку</a></button>
+<h3>Ваши заявки</h3>
+
+<h5>Статус заявки:</h5>
+<form method="GET">
+    <select class="dropdown-item" name="status">
+        <option value="">Все</option>
+        <option value="Новая">Новая</option>
+        <option value="Принято в работу">Принято в работу</option>
+        <option value="Выполнено">Выполнено</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Фильтровать</button>
+</form>
+
+{% if status == 'Новая' %}
+    {% for request in request_list %}
+    {% if request.status == 'Новая' %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Название: {{request.title}}</h5>
+                    <p class="card-text">Категория: {{request.category}}</p>
+                    <p class="card-text">Дата: {{request.created_at}}</p>
+                    <p class="card-text">Описание: {{request.content}}</p>
+                    <p class="card-text">Статус: {{request.status}}</p>
+                </div>
+                <button type="button" class="btn btn-danger"><a href="{% url 'App:profile_request_delete' pk=request.id%}" style="color: white; text-decoration: none;">Удалить заявку</a></button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+{% elif status == 'Принято в работу' %}
+    {% for request in request_list %}
+    {% if request.status == 'Принято в работу' %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Название: {{request.title}}</h5>
+                    <p class="card-text">Категория: {{request.category}}</p>
+                    <p class="card-text">Дата: {{request.created_at}}</p>
+                    <p class="card-text">Описание: {{request.content}}</p>
+                    <p class="card-text">Статус: {{request.status}}</p>
+                </div>
+                <button type="button" class="btn btn-danger"><a href="{% url 'App:profile_request_delete' pk=request.id%}" style="color: white; text-decoration: none;">Удалить заявку</a></button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+{% elif status == 'Выполнено' %}
+    {% for request in request_list %}
+    {% if request.status == 'Выполнено' %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Название: {{request.title}}</h5>
+                    <p class="card-text">Категория: {{request.category}}</p>
+                    <p class="card-text">Дата: {{request.created_at}}</p>
+                    <p class="card-text">Описание: {{request.content}}</p>
+                    <p class="card-text">Статус: {{request.status}}</p>
+                </div>
+                <button type="button" class="btn btn-danger"><a href="{% url 'App:profile_request_delete' pk=request.id%}" style="color: white; text-decoration: none;">Удалить заявку</a></button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+{% else %}
+    {% for request in request_list %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Название: {{request.title}}</h5>
+                    <p class="card-text">Категория: {{request.category}}</p>
+                    <p class="card-text">Дата: {{request.created_at}}</p>
+                    <p class="card-text">Описание: {{request.content}}</p>
+                    <p class="card-text">Статус: {{request.status}}</p>
+                </div>
+                <button type="button" class="btn btn-danger"><a href="{% url 'App:profile_request_delete' pk=request.id%}" style="color: white; text-decoration: none;">Удалить заявку</a></button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

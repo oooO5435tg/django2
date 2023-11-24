@@ -1,0 +1,10 @@
+{% extends "layout/main.html" %}
+{% load bootstrap4 %}
+{% block title %} Удаление Заявки {% endblock %}
+{% block content %}
+<h2>Удаление категории {{ object.category_title }}</h2>
+<form method="post">
+   {% csrf_token %}
+   {% buttons submit='Удалить' %} {% endbuttons %}
+</form>
+{% endblock %}

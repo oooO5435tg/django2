@@ -1,0 +1,18 @@
+{% extends "layout/main.html" %}
+
+
+{% load bootstrap4 %}
+
+
+{% block title %} Смена статуса на "Принято в работу" {% endblock %}
+
+
+{% block content %}
+<h2>Смена статуса на "Принято в работу"</h2>
+<form method="POST" novalidate>
+ {% csrf_token %}
+      {% bootstrap_form form layout='horizontal' %}
+   {% buttons submit='Сохранить' %} {% endbuttons %}
+</form>
+
+{% endblock content%}

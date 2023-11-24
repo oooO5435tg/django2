@@ -1,0 +1,40 @@
+{% extends "layout/main.html" %}
+
+{% block content %}
+    <h1>Мои заявки</h1>
+    {% if request_list %}
+    <label for="status_filter">Фильтр по статусу:</label>
+        <select name="status_filter" id="status_filter" onchange="location.href = '{% url 'main:appli_list' %}?stas=' + this.value;">
+            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>Все</option>
+            <option value="Н" {% if status_filter == 'Н' %}selected{% endif %}>Новые</option>
+            <option value="П" {% if status_filter == 'П' %}selected{% endif %}>В работе</option>
+            <option value="В" {% if status_filter == 'В' %}selected{% endif %}>Выполненные</option>
+        </select>
+
+    <ul>
+      {% for request in request_list %}
+      <li>
+            <p><strong>Дата создания:</strong> {{request.created_at}}</p>
+            <p><strong>Название:</strong> {{request.title}}</p>
+            <p><strong>Описание:</strong> {{request.content}}</p>
+            <p><strong>Категория:</strong> {{request.category}}</p>
+            <p><strong>Статус заявки:</strong> {{request.status}}</p>
+            <nav class="col-md-auto nav flex-column">
+                <a class="nav-link root" href="{% url 'App:profile_request_delete' pk=app.id %}">Удалить заявку</a>
+            </nav>
+            <hr>
+
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <label for="status_filter">Фильтр по статусу:</label>
+        <select name="status_filter" id="status_filter" onchange="location.href = '{% url 'App:request_list' %}?status=' + this.value;">
+            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>Все</option>
+            <option value="Н" {% if status_filter == 'Н' %}selected{% endif %}>Новые</option>
+            <option value="П" {% if status_filter == 'П' %}selected{% endif %}>В работе</option>
+            <option value="В" {% if status_filter == 'В' %}selected{% endif %}>Выполненные</option>
+        </select>
+<h2> у вас нету заявок</h2>
+{% endif %}
+{% endblock %}

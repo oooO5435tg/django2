@@ -1,0 +1,12 @@
+{% extends "layout/main.html" %}
+
+{% block content %}
+    <h1>Категории:</h1>
+    <ul>
+      {% for category in category_list %}
+        <li>{{category.category_title}}</li>
+        <button type="button" class="btn btn-danger"><a href="{% url 'App:admin_category_delete' id=category.id%}" style="color: white; text-decoration: none;">Удалить категорию</a></button>
+      {% endfor %}
+    </ul>
+    <button type="button" class="btn btn-primary"><a href="{% url 'App:admin_category_add' %}" style="color: white; text-decoration: none;">Добавить категорию</a></button>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "layout/main.html" %}
+
+{% block content %}
+  <h2>Последние 4 заявки</h2>
+  {% for request in request_list %}
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <img src="{{request.image.url}}" class="card-img" alt="{{request_list.title}}">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Название: {{request.title}}</h5>
+            <h5 class="card-title">Категория: {{request.category}}</h5>
+            <p class="card-text">Дата: {{request.created_at}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>Нет заявок</p>
+  {% endfor %}
+{% block body %} <p>Количество заявок, находящихся в статусе «Принято в работу»: {{ request_count }}</p> {% endblock body %}
+{% endblock %}

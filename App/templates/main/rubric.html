@@ -1,0 +1,50 @@
+{% extends "layout/main.html" %}
+
+
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{% block title %}{{ rubric }}{% endblock %}
+
+
+{% block searchform %}
+{% endblock %}
+
+
+{% block content %}
+<h2 class="mb-2">{{ rubric }}</h2>
+<div class="container-fluid mb-2">
+   <div class="row">
+       <div class="col">&nbsp;</div>
+       <form class="col-md-auto form-inline">
+           {% bootstrap_form form show_label=False %}
+           {% bootstrap_button content='Искать' button_type='submit' %}
+       </form>
+   </div>
+</div>
+{% if bbs %}
+<ul class="list-unstyled">
+   {% for Request in bbs %}
+   <li class="media my-5 p-3 border">
+       {% url 'App:detail' rubric_pk=rubric.pk pk=Request.pk as url %}
+       <a href="{{ url }}{{ all }}">
+           {% if Request.image %}
+           <img class="mr-3" src="{% thumbnail Request.image 'default' %}">
+           {% else %}
+           <img class="mr-3" src="{% static 'main/empty.jpg' %}">
+           {% endif %}
+       </a>
+       <div class="media-body">
+           <h3><a href="{{ url }}{{ all }}">{{ Request.title }}</a></h3>
+           <h3><a href="{{ url }}{{ all }}">{{ Request.category }}</a></h3>
+           <p class="text-right font-italic">{{ Request.created_at }}</p>
+           <button type="button" class="btn btn-primary"><a href="{% url 'App:profile_request_delete' %}" style="color: white; text-decoration: none;">Удалить заявку</a></button>
+       </div>
+   </li>
+   {% endfor %}
+</ul>
+{% bootstrap_pagination page url=keyword %}
+{% endif %}
+{% endblock %}

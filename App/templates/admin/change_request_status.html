@@ -1,0 +1,21 @@
+{% extends "layout/main.html" %}
+{% block content %}
+
+<h5>Статус заявки:</h5>
+<form method="GET">
+    <select class="dropdown-item" name="status">
+        <option value="">Все</option>
+        <option value="Новая">Новая</option>
+        <option value="Принято в работу">Принято в работу</option>
+        <option value="Выполнено">Выполнено</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Фильтровать</button>
+</form>
+
+<h2>Изменение статуса заявки</h2>
+<form method="post">
+   {% csrf_token %}
+   {{ form.as_p }}
+   <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+{% endblock %}
